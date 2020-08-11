@@ -196,3 +196,14 @@ button:active {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* styles added by myself */
+
+.book-authors ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.book-authors li {
+  padding: 0;
+}
