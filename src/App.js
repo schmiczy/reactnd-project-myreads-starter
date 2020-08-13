@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {throttle} from 'throttle-debounce';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 
@@ -30,11 +31,23 @@ class BooksApp extends React.Component {
       value: 'none',
       text: 'None'
     }
-  ]
+  ];
+
+  throttledSearch = throttle(1000, (query) => {
+    BooksAPI.search(query)
+      .then(result => {
+        // TODO: compare result with bookshelf state and update shelf if needed
+        this.setState({
+          searchResult: result
+        });
+      });
+  });
+
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: ''
+      searchValue: '',
+      searchResult: []
     }
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
@@ -44,8 +57,11 @@ class BooksApp extends React.Component {
     this.setState({
       searchValue: value
     });
-    BooksAPI.search(value)
-      .then(result => console.log(result));
+    value
+    ? this.throttledSearch(value)
+    : this.setState({
+      searchResult: []
+    });
   }
 
   render() {
