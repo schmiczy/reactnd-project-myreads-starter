@@ -156,8 +156,8 @@ button:active {
 }
 
 .book-top {
-  position: relative;
   height: 200px;
+  position: relative;
   display: flex;
   align-items: flex-end;
 }
@@ -165,7 +165,7 @@ button:active {
 .book-menu {
   position: absolute;
   right: 0;
-  bottom: -10px;
+  top: 170px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -187,8 +187,10 @@ button:active {
 /* book cover */
 
 .book-cover {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  background: #eee;
+  width: 128px;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .book-cover-title {
@@ -197,7 +199,7 @@ button:active {
   font-size: 0.8em;
 }
 
-/* styles added by myself */
+/* new styles */
 
 .book-authors ul {
   list-style-type: none;
@@ -206,4 +208,14 @@ button:active {
 
 .book-authors li {
   padding: 0;
+}
+
+.book-interaction {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.book-cover img {
+  box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16), 0 3px 6px 0 rgba(0,0,0,0.23);
 }
