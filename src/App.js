@@ -5,8 +5,8 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 
 import BookInteraction from './components/BookInteraction.js';
-import BookShelves from './components/BookShelves.js';
-import BookSearch from './components/BookSearch.js';
+import BookShelves from './pages/BookShelves.js';
+import BookSearch from './pages/BookSearch.js';
 
 class BooksApp extends React.Component {
   options = [
@@ -34,13 +34,17 @@ class BooksApp extends React.Component {
   ];
 
   throttledSearch = throttle(1000, (query) => {
-    BooksAPI.search(query)
-      .then(result => {
-        // TODO: compare result with bookshelf state and update shelf if needed
-        this.setState({
-          searchResult: result
-        });
-      });
+    query
+      ? BooksAPI.search(query)
+        .then(result => {
+          // TODO: compare result with bookshelf state and update shelf if needed
+          this.setState({
+            searchResult: result
+          });
+        })
+      : this.setState({
+        searchResult: []
+      })
   });
 
   constructor(props) {
@@ -57,11 +61,7 @@ class BooksApp extends React.Component {
     this.setState({
       searchValue: value
     });
-    value
-    ? this.throttledSearch(value)
-    : this.setState({
-      searchResult: []
-    });
+    this.throttledSearch(value);
   }
 
   render() {
@@ -75,6 +75,7 @@ class BooksApp extends React.Component {
             <BookSearch
               searchValue={this.state.searchValue}
               handleSearchChange={this.handleSearchChange}
+              searchResult={this.state.searchResult}
             />
           </Route>
         </Switch>

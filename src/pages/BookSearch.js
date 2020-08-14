@@ -18,10 +18,12 @@ const BookSearch = (props) => (
         />
       </div>
     </div>
-    <BookShelf
-      shelfName="Search results"
-      books={props.searchResult}
-    />
+    <div className="search-books-results">
+      <BookShelf
+        shelfName="Search results"
+        books={props.searchResult}
+      />
+    </div>
   </div>
 );
 

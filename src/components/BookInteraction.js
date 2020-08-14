@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import BookView from './BookView.js';
 import BookMenu from './BookMenu.js';
+import missingCover from '../icons/no-cover-image.png';
 
 class BookInteraction extends React.Component {
   defaultOptions = [
@@ -18,13 +19,13 @@ class BookInteraction extends React.Component {
   }
 
   render() {
-    const {coverImage, title, authors} = this.props.book;
+    const {imageLinks, title, authors} = this.props.book;
     return (
       <div className="book-interaction">
         <BookView
-          coverImage={coverImage}
+          coverImage={imageLinks ? imageLinks.thumbnail : missingCover}
           title={title}
-          authors={authors}
+          authors={authors ? authors : []}
         />
         <BookMenu
           handleChange={(e) => console.log(e.target.value)}
@@ -40,9 +41,11 @@ class BookInteraction extends React.Component {
 
 BookInteraction.propTypes = {
   book: PropTypes.shape({
-    coverImage: PropTypes.string,
+    imageLinks: PropTypes.shape({
+      thumbnail: PropTypes.string
+    }),
     title: PropTypes.string.isRequired,
-    authors: PropTypes.arrayOf(PropTypes.string).isRequired
+    authors: PropTypes.arrayOf(PropTypes.string)
   }),
   menuOptions: PropTypes.array
 };
