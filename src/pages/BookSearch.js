@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
+import BookShelf from '../components/BookShelf.js';
+
 const BookSearch = (props) => (
   // TODO: use bookshelf component to display results
   <div className="search-books">
@@ -16,15 +18,17 @@ const BookSearch = (props) => (
         />
       </div>
     </div>
-    <div className="search-books-results">
-      <ol className="books-grid"></ol>
-    </div>
+    <BookShelf
+      shelfName="Search results"
+      books={props.searchResult}
+    />
   </div>
 );
 
 BookSearch.propTypes = {
   searchValue: PropTypes.string.isRequired,
-  handleSearchChange: PropTypes.func.isRequired
+  handleSearchChange: PropTypes.func.isRequired,
+  searchResult: PropTypes.array.isRequired
 };
 
 export default BookSearch;
