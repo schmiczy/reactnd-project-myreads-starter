@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {throttle} from 'throttle-debounce';
+import {debounce} from 'throttle-debounce';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 
@@ -33,7 +33,7 @@ class BooksApp extends React.Component {
     }
   ];
 
-  throttledSearch = throttle(1000, (query) => {
+  debouncedSearch = debounce(750, (query) => {
     query
       ? BooksAPI.search(query)
         .then(result => {
@@ -61,7 +61,7 @@ class BooksApp extends React.Component {
     this.setState({
       searchValue: value
     });
-    this.throttledSearch(value);
+    this.debouncedSearch(value);
   }
 
   render() {
