@@ -10,7 +10,7 @@ const BookView = (props) => (
     <div className="book-authors">
       <ul>
         {props.authors.map(author => (
-          <li>{author}</li>
+          <li key={author}>{author}</li>
         ))}
       </ul>
     </div>
