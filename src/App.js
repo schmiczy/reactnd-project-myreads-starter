@@ -28,7 +28,7 @@ class BooksApp extends React.Component {
       text: 'Read'
     },
     {
-      value: 'none',
+      value: '',
       text: 'None'
     }
   ];
@@ -51,8 +51,13 @@ class BooksApp extends React.Component {
     super(props);
     this.state = {
       searchValue: '',
-      searchResult: []
+      searchResult: [],
+      shelvedBooks: []
     }
+    BooksAPI.getAll()
+      .then(result => {console.log(result); this.setState({
+        shelvedBooks: result
+      })});
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
@@ -69,13 +74,22 @@ class BooksApp extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <BookShelves />
+            <BookShelves
+              shelves={this.options
+                .filter(option => (option.value !== 'move' && option.value !== ''))
+                .map(option => ({
+                  shelfName: option.text,
+                  books: this.state.shelvedBooks.filter(book => (book.shelf === option.value)),
+                  menuOptions: this.options
+                }))}
+            />
           </Route>
           <Route path="/search">
             <BookSearch
               searchValue={this.state.searchValue}
               handleSearchChange={this.handleSearchChange}
               searchResult={this.state.searchResult}
+              menuOptions={this.options}
             />
           </Route>
         </Switch>

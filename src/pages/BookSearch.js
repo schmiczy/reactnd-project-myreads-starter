@@ -22,6 +22,7 @@ const BookSearch = (props) => (
       <BookShelf
         shelfName="Search results"
         books={props.searchResult}
+        menuOptions={props.menuOptions}
       />
     </div>
   </div>
