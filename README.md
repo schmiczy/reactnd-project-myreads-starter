@@ -32,7 +32,7 @@ The search page can be used to find more interesting books.
 
 To search for a book, do the following:
 1. Type the desired search phrase (book title, author) into the search bar.
-  Note that search phrases aare limited to a preselected set, found in [SEARCH_TERMS.md](./SEARCH_TERMS.md).
+  Note that search phrases are limited to a preselected set, found in [SEARCH_TERMS.md](./SEARCH_TERMS.md).
 2. Add a book to one of the main page shelves by clicking on the drop-down menu and selecting a shelf.
 
 ## Other
