@@ -42,7 +42,9 @@ class BooksApp extends React.Component {
         this.setState(prevState => ({
           searchResult: prevState.searchValue === ''
             ? []
-            : this.crossCheckResult(result, prevState.shelvedBooks)
+            : result.error
+              ? []
+              : this.crossCheckResult(result, prevState.shelvedBooks)
         }));
       });
   });
