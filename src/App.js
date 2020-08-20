@@ -40,7 +40,9 @@ class BooksApp extends React.Component {
     BooksAPI.search(query)
       .then(result => {
         this.setState(prevState => ({
-          searchResult: this.crossCheckResult(result, prevState.shelvedBooks)
+          searchResult: prevState.searchValue === ''
+            ? []
+            : this.crossCheckResult(result, prevState.shelvedBooks)
         }));
       });
   });
