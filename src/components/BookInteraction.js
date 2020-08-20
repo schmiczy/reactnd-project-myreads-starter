@@ -16,10 +16,15 @@ class BookInteraction extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleSelectionChange = this.handleSelectionChange.bind(this);
+  }
+
+  handleSelectionChange(event) {
+    this.props.onMenuChange(this.props.book.id, event.target.value);
   }
 
   render() {
-    const {imageLinks, title, authors} = this.props.book;
+    const {imageLinks, title, authors, shelf} = this.props.book;
     return (
       <div className="book-interaction">
         <BookView
@@ -28,7 +33,8 @@ class BookInteraction extends React.Component {
           authors={authors ? authors : []}
         />
         <BookMenu
-          handleChange={(e) => console.log(e.target.value)}
+          onChange={this.handleSelectionChange}
+          selectedValue={shelf ? shelf : ''}
           options={this.props.menuOptions
             ? this.props.menuOptions
             : this.defaultOptions

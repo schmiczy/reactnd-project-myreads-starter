@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 
 const BookMenu = (props) => (
   <div className="book-menu">
-    <select onChange={props.handleChange}>
+    <select
+      onChange={props.onChange}
+      value={props.selectedValue}
+    >
       {
         props.options.map(option => (
           <option
@@ -20,7 +23,7 @@ const BookMenu = (props) => (
 );
 
 BookMenu.propTypes = {
-  handleChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   otions: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     disabled: PropTypes.bool,

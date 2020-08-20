@@ -23,6 +23,7 @@ const BookSearch = (props) => (
         shelfName="Search results"
         books={props.searchResult}
         menuOptions={props.menuOptions}
+        onMenuChange={props.onMenuChange}
       />
     </div>
   </div>
@@ -31,7 +32,8 @@ const BookSearch = (props) => (
 BookSearch.propTypes = {
   searchValue: PropTypes.string.isRequired,
   handleSearchChange: PropTypes.func.isRequired,
-  searchResult: PropTypes.array.isRequired
+  searchResult: PropTypes.array.isRequired,
+  onMenuChange: PropTypes.func.isRequired
 };
 
 export default BookSearch;

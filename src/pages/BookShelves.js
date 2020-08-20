@@ -16,6 +16,7 @@ const BookShelves = (props) => (
             shelfName={shelf.shelfName}
             books={shelf.books}
             menuOptions={shelf.menuOptions}
+            onMenuChange={props.onMenuChange}
           />
         </div>
       ))}
@@ -25,7 +26,8 @@ const BookShelves = (props) => (
 );
 
 BookShelves.propTypes = {
-  shelves: PropTypes.array.isRequired
+  shelves: PropTypes.array.isRequired,
+  onMenuChange: PropTypes.func.isRequired
 };
 
 export default BookShelves;

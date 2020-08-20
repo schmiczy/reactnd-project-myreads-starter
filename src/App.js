@@ -29,6 +29,7 @@ class BooksApp extends React.Component {
     },
     {
       value: '',
+      disabled: true,
       text: 'None'
     }
   ];
@@ -55,18 +56,37 @@ class BooksApp extends React.Component {
       shelvedBooks: []
     }
     BooksAPI.getAll()
-      .then(result => {console.log(result); this.setState({
-        shelvedBooks: result
-      })});
+      .then(result => {
+        this.setState({
+          shelvedBooks: result
+        })
+      });
+
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSelectionChange = this.handleSelectionChange.bind(this);
   }
 
-  handleSearchChange(e) {
-    const value = e.target.value;
+  handleSearchChange(event) {
+    const value = event.target.value;
     this.setState({
       searchValue: value
     });
     this.debouncedSearch(value);
+  }
+
+  handleSelectionChange(bookId, value) {
+    BooksAPI.update({id: bookId}, value)
+      .then(updateResult => {
+        console.log(updateResult);
+        BooksAPI.getAll()
+          .then(result => {
+            console.log(result);
+            this.setState({
+              shelvedBooks: result
+            })
+        });
+      }
+    );
   }
 
   render() {
@@ -80,8 +100,9 @@ class BooksApp extends React.Component {
                 .map(option => ({
                   shelfName: option.text,
                   books: this.state.shelvedBooks.filter(book => (book.shelf === option.value)),
-                  menuOptions: this.options
+                  menuOptions: this.options.slice(0, -1)
                 }))}
+              onMenuChange={this.handleSelectionChange}
             />
           </Route>
           <Route path="/search">
@@ -90,6 +111,7 @@ class BooksApp extends React.Component {
               handleSearchChange={this.handleSearchChange}
               searchResult={this.state.searchResult}
               menuOptions={this.options}
+              onMenuChange={this.handleSelectionChange}
             />
           </Route>
         </Switch>

@@ -13,6 +13,7 @@ const BookShelf = (props) => (
             <BookInteraction
               book={book}
               menuOptions={props.menuOptions}
+              onMenuChange={props.onMenuChange}
             />
           </li>
         ))}
@@ -24,7 +25,8 @@ const BookShelf = (props) => (
 BookShelf.propTypes = {
   shelfName: PropTypes.string,
   books: PropTypes.array.isRequired,
-  menuOptions: PropTypes.array
+  menuOptions: PropTypes.array,
+  onMenuChange: PropTypes.func.isRequired
 };
 
 export default BookShelf;
