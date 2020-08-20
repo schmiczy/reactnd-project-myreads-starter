@@ -21,7 +21,11 @@ const BookShelves = (props) => (
         </div>
       ))}
     </div>
-    <Link className="open-search" to="/search">Add a book</Link>
+    <div className="open-search">
+      <Link to="/search">
+        <button>Add a book</button>
+      </Link>
+    </div>
   </div>
 );
 
