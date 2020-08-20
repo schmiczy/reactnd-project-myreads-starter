@@ -1,8 +1,8 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {debounce} from 'throttle-debounce';
-import * as BooksAPI from './BooksAPI';
 
+import * as BooksAPI from './utility/BooksAPI';
 import sortByTitle from './utility/sort-by-title.js';
 
 import BookInteraction from './components/BookInteraction.js';
