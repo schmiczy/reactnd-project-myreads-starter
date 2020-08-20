@@ -38,17 +38,12 @@ class BooksApp extends React.Component {
   ];
 
   debouncedSearch = debounce(750, (query) => {
-    query
-      ? BooksAPI.search(query)
-        .then(result => {
-          // TODO: compare result with bookshelf state and update shelf if needed
-          this.setState({
-            searchResult: result
-          });
-        })
-      : this.setState({
-        searchResult: []
-      })
+    BooksAPI.search(query)
+      .then(result => {
+        this.setState(prevState => ({
+          searchResult: this.crossCheckResult(result, prevState.shelvedBooks)
+        }));
+      });
   });
 
   constructor(props) {
@@ -60,7 +55,9 @@ class BooksApp extends React.Component {
     }
     BooksAPI.getAll()
       .then(result => {
-        const sortedBooks = result.slice().sort(sortByTitle);
+        const sortedBooks = result
+          .slice()
+          .sort(sortByTitle);
         this.setState({
           shelvedBooks: sortedBooks
         })
@@ -70,12 +67,19 @@ class BooksApp extends React.Component {
     this.handleSelectionChange = this.handleSelectionChange.bind(this);
   }
 
-  handleSearchChange(event) {
-    const value = event.target.value;
+  handleSearchChange(value) {
+    value === this.state.searchValue
+      ? this.setState(prevState => ({
+        searchResult: this.crossCheckResult(prevState.searchResult, prevState.shelvedBooks)
+      }))
+      : value === ''
+        ? this.setState({
+          searchResult: [],
+        })
+        : this.debouncedSearch(value);
     this.setState({
       searchValue: value
     });
-    this.debouncedSearch(value);
   }
 
   handleSelectionChange(book, value) {
@@ -90,6 +94,19 @@ class BooksApp extends React.Component {
         shelvedBooks: newBooks
       });
     });
+  }
+
+  crossCheckResult(result, shelvedBooks) {
+    const xCheckedBooks = result
+      .map(book => {
+        const shelvedVersion = shelvedBooks
+          .find(shelvedBook => shelvedBook.id === book.id);
+        return shelvedVersion
+          ? Object.assign({}, shelvedVersion)
+          : book;
+      })
+      .sort(sortByTitle);
+    return xCheckedBooks;
   }
 
   render() {
@@ -111,7 +128,7 @@ class BooksApp extends React.Component {
           <Route path="/search">
             <BookSearch
               searchValue={this.state.searchValue}
-              handleSearchChange={this.handleSearchChange}
+              onSearchChange={this.handleSearchChange}
               searchResult={this.state.searchResult}
               menuOptions={this.options}
               onMenuChange={this.handleSelectionChange}
