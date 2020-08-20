@@ -5,7 +5,6 @@ import {debounce} from 'throttle-debounce';
 import * as BooksAPI from './utility/BooksAPI';
 import sortByTitle from './utility/sort-by-title.js';
 
-import BookInteraction from './components/BookInteraction.js';
 import BookShelves from './pages/BookShelves.js';
 import BookSearch from './pages/BookSearch.js';
 
