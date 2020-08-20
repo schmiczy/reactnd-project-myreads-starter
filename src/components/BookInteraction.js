@@ -20,7 +20,7 @@ class BookInteraction extends React.Component {
   }
 
   handleSelectionChange(event) {
-    this.props.onMenuChange(this.props.book.id, event.target.value);
+    this.props.onMenuChange(this.props.book, event.target.value);
   }
 
   render() {

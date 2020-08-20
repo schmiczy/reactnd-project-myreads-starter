@@ -2,11 +2,14 @@ import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {debounce} from 'throttle-debounce';
 import * as BooksAPI from './BooksAPI';
-import './App.css';
+
+import sortByTitle from './utility/sort-by-title.js';
 
 import BookInteraction from './components/BookInteraction.js';
 import BookShelves from './pages/BookShelves.js';
 import BookSearch from './pages/BookSearch.js';
+
+import './App.css';
 
 class BooksApp extends React.Component {
   options = [
@@ -57,8 +60,9 @@ class BooksApp extends React.Component {
     }
     BooksAPI.getAll()
       .then(result => {
+        const sortedBooks = result.slice().sort(sortByTitle);
         this.setState({
-          shelvedBooks: result
+          shelvedBooks: sortedBooks
         })
       });
 
@@ -74,19 +78,18 @@ class BooksApp extends React.Component {
     this.debouncedSearch(value);
   }
 
-  handleSelectionChange(bookId, value) {
-    BooksAPI.update({id: bookId}, value)
-      .then(updateResult => {
-        console.log(updateResult);
-        BooksAPI.getAll()
-          .then(result => {
-            console.log(result);
-            this.setState({
-              shelvedBooks: result
-            })
-        });
-      }
-    );
+  handleSelectionChange(book, value) {
+    BooksAPI.update({id: book.id}, value);
+    this.setState(prevState => {
+      const newBooks = prevState.shelvedBooks
+        .filter(shelvedBook => (shelvedBook.id !== book.id))
+        .concat([Object.assign(book, {shelf: value})])
+        .sort(sortByTitle);
+      return ({
+        ...prevState,
+        shelvedBooks: newBooks
+      });
+    });
   }
 
   render() {
