@@ -138,7 +138,7 @@ class BooksApp extends React.Component {
               onMenuChange={this.handleSelectionChange}
             />
           </Route>
-          <Route path="/search">
+          <Route exact path="/search">
             <BookSearch
               searchValue={this.state.searchValue}
               onSearchChange={this.handleSearchChange}
