@@ -109,11 +109,14 @@ class BooksApp extends React.Component {
   crossCheckResult(result, shelvedBooks) {
     const xCheckedBooks = result
       .map(book => {
+        const {shelf, ...bookWoShelf} = book;
         const shelvedVersion = shelvedBooks
           .find(shelvedBook => shelvedBook.id === book.id);
         return shelvedVersion
           ? Object.assign({}, shelvedVersion)
-          : book;
+          : book.shelf
+            ? bookWoShelf
+            : book;
       })
       .sort(sortByTitle);
     return xCheckedBooks;
