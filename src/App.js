@@ -57,6 +57,12 @@ class BooksApp extends React.Component {
       searchResult: [],
       shelvedBooks: []
     }
+
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSelectionChange = this.handleSelectionChange.bind(this);
+  }
+
+  componentDidMount() {
     BooksAPI.getAll()
       .then(result => {
         const sortedBooks = result
@@ -66,9 +72,6 @@ class BooksApp extends React.Component {
           shelvedBooks: sortedBooks
         })
       });
-
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-    this.handleSelectionChange = this.handleSelectionChange.bind(this);
   }
 
   handleSearchChange(value) {
