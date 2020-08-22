@@ -47,13 +47,15 @@ body, .app {
   text-align: center;
 }
 
-.open-search {
+.open-search,
+.back-to-home {
   position: fixed;
   right: 25px;
   bottom: 25px;
 }
 
-.open-search button {
+.open-search button,
+.back-to-home button {
   display: block;
   width: 50px;
   height: 50px;
@@ -120,7 +122,8 @@ button:active {
   outline: none;
 }
 
-.search-books-results {
+.search-books-results,
+.page-error {
   padding: 80px 10px 20px;
 }
 
