@@ -8,6 +8,7 @@ import sortByTitle from './utility/sort-by-title.js';
 import BookShelves from './pages/BookShelves.js';
 import BookSearch from './pages/BookSearch.js';
 import PageNotFound from './pages/PageNotFound.js';
+import Everything from './pages/Everything.js';
 
 import './App.css';
 
@@ -137,6 +138,9 @@ class BooksApp extends React.Component {
               menuOptions={this.options}
               onMenuChange={this.handleSelectionChange}
             />
+          </Route>
+          <Route path="*/everything*">
+            <Everything />
           </Route>
           <Route path="*">
             <PageNotFound />
