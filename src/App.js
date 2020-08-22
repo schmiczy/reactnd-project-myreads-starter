@@ -32,8 +32,7 @@ class BooksApp extends React.Component {
       text: 'Read'
     },
     {
-      value: '',
-      disabled: true,
+      value: 'none',
       text: 'None'
     }
   ];
@@ -90,10 +89,13 @@ class BooksApp extends React.Component {
   handleSelectionChange(book, value) {
     BooksAPI.update({id: book.id}, value);
     this.setState(prevState => {
-      const newBooks = prevState.shelvedBooks
-        .filter(shelvedBook => (shelvedBook.id !== book.id))
-        .concat([Object.assign(book, {shelf: value})])
-        .sort(sortByTitle);
+      const newBooks = value !== 'none'
+        ? prevState.shelvedBooks
+          .filter(shelvedBook => (shelvedBook.id !== book.id))
+          .concat([Object.assign(book, {shelf: value})])
+          .sort(sortByTitle)
+        : prevState.shelvedBooks
+          .filter(shelvedBook => (shelvedBook.id !== book.id));
       return ({
         ...prevState,
         shelvedBooks: newBooks
@@ -121,11 +123,11 @@ class BooksApp extends React.Component {
           <Route exact path="/">
             <BookShelves
               shelves={this.options
-                .filter(option => (option.value !== 'move' && option.value !== ''))
+                .filter(option => (option.value !== 'move' && option.value !== 'none'))
                 .map(option => ({
                   shelfName: option.text,
                   books: this.state.shelvedBooks.filter(book => (book.shelf === option.value)),
-                  menuOptions: this.options.slice(0, -1)
+                  menuOptions: this.options
                 }))}
               onMenuChange={this.handleSelectionChange}
             />
