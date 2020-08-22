@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BookInteraction from './BookInteraction.js';
+import BookView from './BookView.js';
 
 const BookShelf = (props) => (
   <div className="bookshelf">
@@ -10,11 +11,16 @@ const BookShelf = (props) => (
       <ol className="books-grid">
         {props.books.map(book => (
           <li key={book.id}>
-            <BookInteraction
-              book={book}
-              menuOptions={props.menuOptions}
-              onMenuChange={props.onMenuChange}
-            />
+            {props.menuOptions && props.onMenuChange
+              ? <BookInteraction
+                book={book}
+                menuOptions={props.menuOptions}
+                onMenuChange={props.onMenuChange}
+              />
+              : <BookView
+                book={book}
+              />
+            }
           </li>
         ))}
       </ol>
@@ -26,7 +32,7 @@ BookShelf.propTypes = {
   shelfName: PropTypes.string,
   books: PropTypes.array.isRequired,
   menuOptions: PropTypes.array,
-  onMenuChange: PropTypes.func.isRequired
+  onMenuChange: PropTypes.func
 };
 
 export default BookShelf;
