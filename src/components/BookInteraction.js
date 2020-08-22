@@ -31,7 +31,7 @@ class BookInteraction extends React.Component {
         />
         <BookMenu
           onChange={this.handleSelectionChange}
-          selectedValue={shelf ? shelf : ''}
+          selectedValue={shelf ? shelf : 'none'}
           options={this.props.menuOptions
             ? this.props.menuOptions
             : this.defaultOptions
